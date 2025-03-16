@@ -1,0 +1,155 @@
+Data Activity 5
+Using the Health_Data, please perform the following functions in R:
+
+Find out mean, median and mode of variables sbp, dbp and income.
+Find out the five-figure summary of income variable and present it using a Boxplot.
+Run a suitable hypothesis test to see if there is any association between systolic blood pressure and presence and absence of peptic ulcer.
+
+1. Calculate Mean, Median, and Mode of Variables (sbp, dbp, income)
+> library(haven)
+> Health_Data <- read_sav("C:/Users/arif_/Downloads/Health Data.sav")
+> View(Health_Data)
+
+# Calculate mean, median, and mode for sbp, dbp, and income
+> mean_sbp <- mean(Health_Data$sbp, na.rm = TRUE) 
+> median_sbp <- median(Health_Data$sbp, na.rm = TRUE) 
+> mode_sbp <- as.numeric(names(sort(table(Health_Data$sbp), decreasing = TRUE))[1])
+
+> mean_dbp <- mean(Health_Data$dbp, na.rm = TRUE)
+> median_dbp <- median(Health_Data$dbp, na.rm = TRUE)
+> mode_dbp <- as.numeric(names(sort(table(Health_Data$dbp), decreasing = TRUE))[1])
+
+> mean_income <- mean(Health_Data$income, na.rm = TRUE)
+> median_income <- median(Health_Data$income, na.rm = TRUE)
+> mode_income <- as.numeric(names(sort(table(Health_Data$income), decreasing = TRUE))[1])
+
+# Display the results
+> list(
++     sbp = list(mean = mean_sbp, median = median_sbp, mode = mode_sbp),
++     dbp = list(mean = mean_dbp, median = median_dbp, mode = mode_dbp),
++     income = list(mean = mean_income, median = median_income, mode = mode_income)
+$sbp
+$sbp$mean
+[1] 127.7333
+
+$sbp$median
+[1] 123
+
+$sbp$mode
+[1] 120
+
+
+$dbp
+$dbp$mean
+[1] 82.76667
+
+$dbp$median
+[1] 82
+
+$dbp$mode
+[1] 74
+
+
+$income
+$income$mean
+[1] 85194.49
+
+$income$median
+[1] 86560.5
+
+$income$mode
+[1] 52933
+
+2. Five-Number Summary of Income and Boxplot
+The five-number summary consists of: minimum, 1st quartile (Q1), median, 3rd quartile (Q3), and maximum.
+
+# Five-figure summary of income
+> income_summary <- summary(Health_Data$income)
+> print(income_summary)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  52933   68637   86561   85194   99696  117210 
+
+# Boxplot of income
+> boxplot(Health_Data$income,
++         main = "Boxplot of Income",
++         xlab = "Income",
++         col = "skyblue",
++         horizontal = TRUE)
+
+3. Hypothesis Test for Association Between SBP and Peptic Ulcer
+To test whether there is an association between systolic blood pressure (sbp) and the presence or absence of peptic ulcer (peptic_ulcer), you can use a t-test if peptic_ulcer is a binary variable (e.g., 0 = No, 1 = Yes). This compares the means of sbp for the two groups.
+# Perform t-test for sbp and peptic ulcer status
+> t_test_result <- t.test(
++     sbp ~ pepticulcer,  # sbp as outcome, pepticulcer as grouping variable
++     data = Health_Data,
++     na.rm = TRUE
++ )
+> print(t_test_result)
+
+	Welch Two Sample t-test
+
+data:  sbp by pepticulcer
+t = 1.2142, df = 57.562, p-value = 0.2296
+alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+95 percent confidence interval:
+ -2.889367 11.795703
+sample estimates:
+mean in group 1 mean in group 2 
+       131.3171        126.8639 
+> summary(Health_Data$pepticulcer)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.000   2.000   2.000   1.805   2.000   2.000 
+> unique(Health_Data$pepticulcer)
+<labelled<double>[2]>: Have peptic ulcer
+[1] 2 1
+
+Labels:
+ value label
+     1   Yes
+     2    No
+> t_test_result <- t.test(
++     sbp ~ pepticulcer,  # sbp as outcome, pepticulcer as grouping variable
++     data = Health_Data,
++     na.rm = TRUE
++ )
+> print(t_test_result)
+
+	Welch Two Sample t-test
+
+data:  sbp by pepticulcer
+t = 1.2142, df = 57.562, p-value = 0.2296
+alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+95 percent confidence interval:
+ -2.889367 11.795703
+sample estimates:
+mean in group 1 mean in group 2 
+       131.3171        126.8639 
+
+> Health_Data$pepticulcer <- factor(Health_Data$pepticulcer, 
++                                   levels = c(1, 2), 
++                                   labels = c("Yes", "No"))
+> t_test_result <- t.test(
++     sbp ~ pepticulcer,
++     data = Health_Data,
++     na.rm = TRUE
++ )
+> print(t_test_result)
+
+	Welch Two Sample t-test
+
+
+Interpretation of the Results:
+
+The test will output the means of systolic blood pressure (sbp) for the two groups (peptic ulcer present vs. absent).
+
+The p-value will help determine whether there is a statistically significant difference in sbp between these groups.
+
+Verify Variable Labels: If you'd like, you can reassign meaningful factor labels to make your output more intuitive:
+data:  sbp by pepticulcer
+t = 1.2142, df = 57.562, p-value = 0.2296
+alternative hypothesis: true difference in means between group Yes and group No is not equal to 0
+95 percent confidence interval:
+ -2.889367 11.795703
+sample estimates:
+mean in group Yes  mean in group No 
+         131.3171          126.8639 
