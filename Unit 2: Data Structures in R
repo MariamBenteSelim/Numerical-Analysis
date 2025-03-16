@@ -33,3 +33,20 @@ Frequency:
 1383 respondents were victims of crime.
 
 Since this variable represents categorical data, it’s more appropriate to treat it as a factor rather than keeping it as a numeric variable. This ensures that statistical models, summary functions, and visualizations handle it correctly.
+2. Convert to Factor Using as_factor()
+You can use the as_factor() function from the haven package to convert bcsvictim into a factor while preserving its labels:
+> Crime_Survey_for_England_and_Wales$bcsvictim <- as_factor(Crime_Survey_for_England_and_Wales$bcsvictim)
+3. Verify the Conversion
+After converting, check the structure and levels of the variable:
+> str(Crime_Survey_for_England_and_Wales$bcsvictim)
+ Factor w/ 2 levels "Not a victim of crime",..: 1 1 1 2 1 1 1 1 1 1 ...
+ - attr(*, "label")= chr "Experience of any crime in the previous 12 months"
+> levels(Crime_Survey_for_England_and_Wales$bcsvictim)
+[1] "Not a victim of crime" "Victim of crime"
+4. Re-Examine the Frequencies
+To confirm that the conversion hasn't altered the data:
+> table(Crime_Survey_for_England_and_Wales$bcsvictim)
+
+Not a victim of crime       Victim of crime 
+                 7460                  1383 
+Now, bcsvictim will be treated as a proper factor variable in your analyses, ensuring clarity and accuracy when interpreting results or visualizing data.
