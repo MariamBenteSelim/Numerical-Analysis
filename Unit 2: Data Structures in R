@@ -17,3 +17,19 @@ Assess the results and decide if you need to convert this variable into a factor
 
    0    1 
 7460 1383 
+1. Assessing the Variable
+Structure: bcsvictim is currently stored as a dbl+lbl (a numeric variable with labels), as indicated by the output from str().
+
+Labels: The variable has two categories:
+
+0: Not a victim of crime.
+
+1: Victim of crime.
+
+Frequency:
+
+7460 respondents were not victims of crime.
+
+1383 respondents were victims of crime.
+
+Since this variable represents categorical data, it’s more appropriate to treat it as a factor rather than keeping it as a numeric variable. This ensures that statistical models, summary functions, and visualizations handle it correctly.
