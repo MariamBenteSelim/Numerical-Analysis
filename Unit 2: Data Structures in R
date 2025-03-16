@@ -1,2 +1,19 @@
-This week, we're exploring the basics of data visualization, its principles, and the tools involved. We covered the grammar and idioms, building blocks for visual encoding, and data abstraction. By the end, I was able to critically evaluate visualization principles and apply them effectively.
-There were a collaborative discussion held on Report on Ryanair and Easyjet websites.
+Formative activities:
+Data Activity 2
+Using the Crime Survey for England and Wales, 2013-2014: Unrestricted Access Teaching Dataset (see Unit 1), perform the following activities:
+Explore whether survey respondents experienced any crime in the 12 months prior to the survey using the variable bcsvictim.
+Create a frequency table to count if the survey respondents experienced any crime in the previous 12 months. Use the table() command.
+Assess the results and decide if you need to convert this variable into a factor variable. Use as_factor.
+> library(haven)
+> Crime_Survey_for_England_and_Wales <- read_dta("C:/Users/arif_/OneDrive/Desktop/Numerical Analysis January 2025/Crime Survey for England and Wales.dta")
+> View(Crime_Survey_for_England_and_Wales)
+> str(Crime_Survey_for_England_and_Wales$bcsvictim)
+ dbl+lbl [1:8843] 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,...
+ @ label       : chr "Experience of any crime in the previous 12 months"
+ @ format.stata: chr "%8.0g"
+ @ labels      : Named num [1:2] 0 1
+  ..- attr(*, "names")= chr [1:2] "Not a victim of crime" "Victim of crime"
+> table(Crime_Survey_for_England_and_Wales$bcsvictim)
+
+   0    1 
+7460 1383 
